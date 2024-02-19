@@ -1,0 +1,203 @@
+<%- include('header')  %>
+
+  <div class="wrapper">
+    <div class="container-fluid main">
+        <div class="row row1">
+            <div class="col-md-6 side-image">
+                
+                <div class="text">
+                    <h1>SIGN UP</h1>
+                </div>
+              
+                
+            </div>
+
+            <div class="col-md-6 right">
+                
+                <div class="input-box">
+                   
+                   <header>Create Account</header>
+                   <% if (locals.alert) { %>
+                    <div class="alert alert-danger text-center m-3" id="error"><%= locals.alert  %></div>
+                   <% } %>
+                <% if (locals.signup) { %>
+                    <div class="alert alert-warning text-center m-3" id="warning"><%= locals.signup  %></div>
+                   <% } %>
+                   <form action="/signup" method="post">
+                   <div class="input-field">
+                        <input type="text" class="input" name="name" id="contact-name" required  onkeyup="validateName()">
+                        <span id="name-error" style="font-size: 14px; margin-top: -20px;"></span>
+                        <label for="name">Enter your Name</label> 
+                    </div> 
+                   <div class="input-field">
+                        <input type="text" class="input" name="phone" id="contact-phone" required onkeyup="validatePhone()">
+                        <span id="phone-error" style="font-size: 14px; margin-top: -20px;"></span>
+                        <label for="phone">Enter your phone number</label> 
+                    </div> 
+                   <div class="input-field">
+                        <input type="text" class="input" name="email" id="contact-email" required onkeyup="validateEmail()">
+                        <span id="email-error" style="font-size: 14px; margin-top: -20px;"></span>
+                        <label for="email">Enter your email</label> 
+                    </div> 
+                   <div class="input-field">
+                        <input type="password" class="input" name="password" id="contact-password" required onkeyup="validatePassword()">
+                        <span id="password-error" style="font-size: 14px; margin-top: -20px;"></span>
+                        <label for="pass">Create a password</label>
+                    </div> 
+                   <div class="input-field">
+                        
+                        <input type="submit" class="submit" value="Sign Up" onclick="return validateForm()">
+                        <span id="submit-error" style="font-size: 14px; "></span>
+                   </div> 
+                  </form>
+                   <div class="signin">
+                    <span>Already have an account? <a href="/">Log in here</a></span>
+                   </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var nameError = document.getElementById("name-error");
+    var emailError = document.getElementById("email-error");
+    var phoneError = document.getElementById("phone-error");
+    var passwordError = document.getElementById("password-error");
+    var submitError = document.getElementById("submit-error");
+    
+    function validateName() {
+      var name = document.getElementById("contact-name").value;
+    
+      if (name.length === 0) {
+        nameError.style.color = "red";
+        return false;
+      }
+    
+      // Check if the name starts with a space
+      if (name[0] === ' ') {
+        nameError.innerHTML = "Name should not start with a space";
+        nameError.style.color = "red";
+        return false;
+      }
+    
+      // Check if the name contains only alphabets
+      if (name.match(/^[0-9]+$/)) {
+        nameError.innerHTML = "Alphabets only";
+        nameError.style.color = "red";
+        return false;
+      }
+    
+      // Check if the name contains alphabets separated by a space
+      if (!name.match(/^[A-Za-z]*\s{1}[A-Za-z]*$/)) {
+        nameError.innerHTML = "Write full name";
+        nameError.style.color = "red";
+        return false;
+      }
+    
+      nameError.innerHTML = "Valid";
+      nameError.style.color = "green";
+      return true;
+    }
+    
+    function validateEmail() {
+      var email = document.getElementById("contact-email").value;
+    
+      if (email.length == 0) {
+        emailError.innerHTML = "Email is required";
+        emailError.style.color = "red";
+        return false;
+      }
+      if (!email.match(/^[A-Za-z\._\-[0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
+        emailError.innerHTML = "Email is invalid";
+        emailError.style.color = "red";
+        return false;
+      }
+      emailError.innerHTML = "Valid";
+      emailError.style.color = "green";
+      return true;
+    }
+    
+    function validatePhone() {
+      var phone = document.getElementById("contact-phone").value;
+    
+      if (phone.length == 0) {
+        phoneError.innerHTML = "Phone number is required";
+        phoneError.style.color = "red";
+        return false;
+      }
+    
+      // Basic phone number validation: Allows only numeric input and a specific length
+      if (!phone.match(/^[0-9]{10}$/)) {
+        phoneError.innerHTML = "Invalid phone number";
+        phoneError.style.color = "red";
+        return false;
+      }
+    
+      phoneError.innerHTML = "Valid";
+      phoneError.style.color = "green";
+      return true;
+    }
+    
+    
+    
+    
+function validatePassword() {
+  var password = document.getElementById("contact-password").value;
+
+  if (password.length === 0) {
+    passwordError.innerHTML = "Password is required";
+    passwordError.style.color = "red";
+    return false;
+  }
+
+  // Check if the password contains any spaces
+  if (password.includes(' ')) {
+    passwordError.innerHTML = "Password should not contain spaces";
+    passwordError.style.color = "red";
+    return false;
+  }
+
+  // Basic password validation: Requires at least 8 characters
+  if (password.length < 5) {
+    passwordError.innerHTML = "Password must be at least 5 characters";
+    passwordError.style.color = "red";
+    return false;
+  }
+
+  passwordError.innerHTML = "Valid";
+  passwordError.style.color = "green";
+  return true;
+}
+
+    
+    
+    function validateForm() {
+      if (
+        !validateName() ||
+        !validateEmail() ||
+        !validatePhone() ||
+        !validatePassword()
+      ) {
+        submitError.style.display = "block";
+        submitError.innerHTML = "Please enter all the fields to submit ";
+        submitError.style.color="red"
+        setTimeout(function () {
+          submitError.style.display = "none";
+        }, 3000);
+        return false;
+      }
+    }
+    
+</script>
+
+<script>
+    setTimeout(() => {
+    document.getElementById("error").style.display = "none";
+    }, 3000);
+    setTimeout(() => {
+    document.getElementById("warning").style.display = "none";
+    }, 3000);
+</script>
+
+<%- include('footer')  %>

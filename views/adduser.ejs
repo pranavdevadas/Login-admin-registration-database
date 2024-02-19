@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= locals.title ? title:"Add User" %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="background-color: #DDD0C8;">
+
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand logo text-uppercase" href="/home">ADMIN</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a id="nav-link" class="nav-link" aria-current="page" href="/home"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/adduser">Add User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/adminlogout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mx-auto mt-5 userbox">
+        <div class="card shadow">
+          <div class="card-header" style="background-color: black;">
+            <h5 class="text-light text-center my-1">Add New User</h5>
+          
+          </div>
+          <% if (locals.alert) { %>
+            <div class="alert alert-danger text-center m-3" id="error"><%= locals.alert  %></div>
+           <% } %>
+          <div class="card-body p-4">
+            <form action="/add" method="post" id="add-form">
+            <div class="input-field mb-2">
+              
+              <input type="text" name="name" class="input mb-0" placeholder="Enter name" id="contact-name" required onkeyup="validateName()">
+              <span id="name-error" style="font-size: 14px;"></span>
+            </div>
+            <div class="input-field mb-2">
+          
+              <input type="email" name="email" class="input mb-0" placeholder="Enter email"  id="contact-email" required onkeyup="validateEmail()">
+              <span id="email-error" style="font-size: 14px;"></span>
+            </div>
+            <div class="input-field mb-2">
+             
+              <input type="tel" name="phone" class="input mb-0" placeholder="Enter phone" id="contact-phone" required onkeyup="validatePhone()">
+              <span id="phone-error" style="font-size: 14px;"></span>
+            </div>
+            <div class="input-field mb-2">
+             
+              <input type="password" name="password" class="input mb-0" placeholder="Enter password" id="contact-password" required onkeyup="validatePassword()">
+              <span id="password-error" style="font-size: 14px;"></span>
+            </div>
+            <div class="input-field mb-2 d-grid">
+              <input type="submit" name="submit" value="Submit" class="submit1" onclick="return validateForm()">
+              <span id="submit-error" style="font-size: 14px;"></span>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>var nameError = document.getElementById("name-error");
+    var emailError = document.getElementById("email-error");
+    var phoneError = document.getElementById("phone-error");
+    var passwordError = document.getElementById("password-error");
+    var submitError = document.getElementById("submit-error");
+    
+    function validateName() {
+      var name = document.getElementById("contact-name").value;
+    
+      if (name.length === 0) {
+        nameError.innerHTML = "Name is required";
+        nameError.style.color = "red";
+        return false;
+      }
+    
+      // Check if the name starts with a space
+      if (name[0] === ' ') {
+        nameError.innerHTML = "Name should not start with a space";
+        nameError.style.color = "red";
+        return false;
+      }
+    
+      // Check if the name contains only alphabets
+      if (name.match(/^[0-9]+$/)) {
+        nameError.innerHTML = "Alphabets only";
+        nameError.style.color = "red";
+        return false;
+      }
+    
+      // Check if the name contains alphabets separated by a space
+      if (!name.match(/^[A-Za-z]*\s{1}[A-Za-z]*$/)) {
+        nameError.innerHTML = "Write full name";
+        nameError.style.color = "red";
+        return false;
+      }
+    
+      nameError.innerHTML = "Valid";
+      nameError.style.color = "green";
+      return true;
+    }
+    
+    function validateEmail() {
+      var email = document.getElementById("contact-email").value;
+    
+      if (email.length == 0) {
+        emailError.innerHTML = "Email is required";
+        emailError.style.color = "red";
+        return false;
+      }
+      if (!email.match(/^[A-Za-z\._\-[0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
+        emailError.innerHTML = "Email is invalid";
+        emailError.style.color = "red";
+        return false;
+      }
+      emailError.innerHTML = "Valid";
+      emailError.style.color = "green";
+      return true;
+    }
+    
+    function validatePhone() {
+      var phone = document.getElementById("contact-phone").value;
+    
+      if (phone.length == 0) {
+        phoneError.innerHTML = "Phone number is required";
+        phoneError.style.color = "red";
+        return false;
+      }
+    
+      // Basic phone number validation: Allows only numeric input and a specific length
+      if (!phone.match(/^[0-9]{10}$/)) {
+        phoneError.innerHTML = "Invalid phone number";
+        phoneError.style.color = "red";
+        return false;
+      }
+    
+      phoneError.innerHTML = "Valid";
+      phoneError.style.color = "green";
+      return true;
+    }
+    
+    
+    
+    
+  function validatePassword() {
+  var password = document.getElementById("contact-password").value;
+
+  if (password.length === 0) {
+    passwordError.innerHTML = "Password is required";
+    passwordError.style.color = "red";
+    return false;
+  }
+
+  // Check if the password contains any spaces
+  if (password.includes(' ')) {
+    passwordError.innerHTML = "Password should not contain spaces";
+    passwordError.style.color = "red";
+    return false;
+  }
+
+  // Basic password validation: Requires at least 8 characters
+  if (password.length < 5) {
+    passwordError.innerHTML = "Password must be at least 5 characters";
+    passwordError.style.color = "red";
+    return false;
+  }
+
+  passwordError.innerHTML = "Valid";
+  passwordError.style.color = "green";
+  return true;
+}
+
+    
+    
+    function validateForm() {
+      if (
+        !validateName() ||
+        !validateEmail() ||
+        !validatePhone() ||
+        !validatePassword()
+      ) {
+        submitError.style.display = "block";
+        submitError.innerHTML = "Please enter all the fields to submit ";
+        submitError.style.color="red"
+        setTimeout(function () {
+          submitError.style.display = "none";
+        }, 3000);
+        return false;
+      }
+    }
+    
+    </script>
+  <script>
+    setTimeout(() => {
+    document.getElementById("error").style.display = "none";
+    }, 3000);
+  </script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

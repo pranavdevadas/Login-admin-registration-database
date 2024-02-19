@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= locals.title ? title:"Edit User" %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="background-color: rgb(38, 37, 37);">
+
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand logo text-uppercase" href="/home">ADMIN</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a id="nav-link" class="nav-link" aria-current="page" href="/home"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/adduser">Add User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mx-auto mt-5 userbox">
+        <div class="card shadow">
+          <div class="card-header" style="background-color: black;">
+            <h5 class="text-light text-center my-1">Edit User(<%= user.name  %>)</h5>
+          </div>
+          <div class="card-body p-4">
+            <form action="/update/<%= user._id  %>" method="post" id="add-form">
+            <div class="input-field mb-3">
+              
+              <input type="text" name="name" class="input" placeholder="Enter name" value="<%= user.name %>" required>
+            </div>
+            <div class="input-field mb-3">
+          
+              <input type="email" name="email" class="input" placeholder="Enter email" value="<%= user.email %>" required>
+            </div>
+            <div class="input-field mb-3">
+             
+              <input type="tel" name="phone" class="input" placeholder="Enter phone" value="<%= user.phone %>" required>
+            </div>
+            <div class="input-field mb-3 d-grid">
+              <input type="submit" name="submit" value="Update User" class="submit1">
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+
+<%- include('header')  %>
+  <div class="wrapper">
+    <div class="container-fluid main">
+        <div class="row row1">
+            
+
+            <div class="col-md-6 right">
+                
+                <div class="input-box">
+                   
+                   <header>LOGIN</header>
+                   <% if (locals.alert) { %>
+                    <div class="alert alert-danger text-center m-3" id="error"><%= locals.alert  %></div>
+                   <% } %>
+                   <form action="/login" method="POST">
+                   <div class="input-field">
+                        <input type="text" name="email" class="input" id="email" required="" autocomplete="off">
+                        <label for="email">Email</label> 
+                    </div> 
+                   <div class="input-field">
+                        <input type="password" name="password" class="input" id="pass" required="">
+                        <label for="pass">Password</label>
+                    </div> 
+                   <div class="input-field">
+
+                        <input type="submit" class="submit" value="Login">
+                   </div> 
+                  </form>
+                   <div class="signin">
+                    <span>Don't have an account? <a href="/signup">Register here</a></span>
+                   </div>
+                </div>  
+            </div>
+
+            <div class="col-md-6 side-image">
+                
+              <div class="text">
+                  <h1>LOGIN</h1>
+              </div>
+              
+          </div>
+
+
+        </div>
+    </div>
+</div>
+<script>
+    setTimeout(() => {
+    document.getElementById("error").style.display = "none";
+    }, 3000);
+</script>   
+<%- include('footer')  %>
